@@ -5,8 +5,7 @@
 
 An AI-powered application for detecting and correcting errors in clinical notes using state-of-the-art language models.
 
-![Demo Screenshot](Images/screenshot1.png) *(Add screenshot after testing)*
-
+![image](Images/screenshot1.png)
 ## Features
 - **Role-Based Error Detection**: Tailored checks for:
   - **Clinicians**: Diagnosis code validation, lab result formatting
