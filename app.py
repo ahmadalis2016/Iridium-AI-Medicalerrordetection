@@ -1,11 +1,9 @@
-# app.py
-# app.py
 import streamlit as st
 from transformers import pipeline, AutoTokenizer, AutoModelForTokenClassification
 import torch
 from PIL import Image
 
-# Initialize models (cache to avoid reloading)
+
 @st.cache_resource
 def load_models():
     ner_tokenizer = AutoTokenizer.from_pretrained("emilyalsentzer/Bio_ClinicalBERT")
@@ -15,7 +13,7 @@ def load_models():
                         device=0 if torch.cuda.is_available() else -1)
     return ner_model, ner_tokenizer, generator
 
-# --- Sidebar Section ---
+
 with st.sidebar:
     try:
         logo_path = "Images/IridiumAILogo.png"
@@ -32,7 +30,7 @@ with st.sidebar:
         help="Tailor error detection to your professional needs"
     )
 
-# --- Main UI Section ---
+
 st.title(f"IridiumAI Clinical Notes Assistant - {user_role} Mode")
 st.markdown("""
 Detect potential errors in clinical notes using BioClinicalBERT and get correction suggestions with Flan-T5.
@@ -41,7 +39,7 @@ Detect potential errors in clinical notes using BioClinicalBERT and get correcti
 # Define user_input BEFORE the button handler
 user_input = st.text_area("Paste clinical note:", height=200)
 
-# --- Helper Functions ---
+
 def check_drug_interactions(text):
     interactions = []
     if 'warfarin' in text.lower() and ('ibuprofen' in text.lower() or 'naproxen' in text.lower()):
@@ -85,7 +83,7 @@ def suggest_corrections(text, errors, generator):
     prompt = f"Clinical note: {text}\nPotential issues: {', '.join(errors)}\nRewrite this note with corrections:"
     return generator(prompt, max_length=512)[0]['generated_text']
 
-# --- Analysis Button Handler ---
+-
 if st.button("Analyze"):
     ner_model, ner_tokenizer, generator = load_models()
     
